@@ -3,7 +3,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  final String user;
+  final String password;
+
+  const LoginScreen({super.key, required this.user, required this.password});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -13,6 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final userController = TextEditingController();
   final passwordController = TextEditingController();
+  bool saveLogin = false;
 
   Future<void> login() async {
     final user = userController.text.trim();
@@ -25,9 +29,11 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('username', user);
-    await prefs.setString('password', pass);
+    if (saveLogin) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('username', user);
+      await prefs.setString('password', pass);
+    }
 
     Navigator.pushReplacement(
       // ignore: use_build_context_synchronously
@@ -59,10 +65,19 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               obscureText: true,
             ),
+            Checkbox(
+              value: saveLogin, 
+              onChanged: (bool? value) {
+                setState(() {
+                  saveLogin = value!;
+                });
+              }
+              ),
             ElevatedButton(
               onPressed: login,
               child: Text('Login'),
-            ),
+            )
+            ,
           ],
         )
         ),
