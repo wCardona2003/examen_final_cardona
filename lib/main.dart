@@ -11,11 +11,22 @@ void main() {
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
-  Future<List> isLoggedIn() async {
+  Future<bool> isLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();
     final user = prefs.getString('username');
     final pass = prefs.getString('password');
-    return [user,pass];
+    return user != null && pass != null;
+  }
+
+  Future<List<String?>> getUserData() async {
+    final prefs = await SharedPreferences.getInstance(); 
+    final user = prefs.getString('username');
+    final pass = prefs.getString('password');
+    if(user != null && pass != null){
+      return [user,pass];
+    } else {
+      return ["",""]; 
+    }
   }
 
   @override
@@ -34,7 +45,7 @@ class MainApp extends StatelessWidget {
             );
           }
 
-          return snapshot.data == true ? LoginScreen() : LoginScreen();
+          return snapshot.data == true ? LoginScreen(userData: getUserData()) : LoginScreen(userData: getUserData());
         },
       ),
     );

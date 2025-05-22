@@ -3,10 +3,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  final String user;
-  final String password;
+  final Future<List<String?>> userData;
 
-  const LoginScreen({super.key, required this.user, required this.password});
+  const LoginScreen({super.key, required this.userData});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
