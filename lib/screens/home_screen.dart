@@ -24,22 +24,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Pantalla Principal')),
-      body: ListView.builder(
-        itemCount: ApiService().fetchCountries().length,
-        itemBuilder: (context, index) {
-          final country = ApiService().fetchCountries()[index];
-          return ListTile(
-            leading: country['foto'] != null
-                ? Image.network(country['foto'], width: 50, height: 50, fit: BoxFit.cover)
-                : const Icon(Icons.fastfood, size: 50),
-            title: Text(country['nom']),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => CountryScreen(country: country)),
-              );
-            },
-          );
+      body: Container(
+        //itemCount: ApiService().fetchCountries().length,
+        //itemBuilder: (context, index) {
+        //  final country = ApiService().fetchCountries()[index];
+        //  return ListTile(
+        //    leading: country['foto'] != null
+        //        ? Image.network(country['foto'], width: 50, height: 50, fit: BoxFit.cover)
+        //        : const Icon(Icons.fastfood, size: 50),
+        //    title: Text(country['nom']),
+        //    onTap: () {
+        //      Navigator.push(
+        //        context,
+        //        MaterialPageRoute(builder: (_) => CountryScreen(country: country)),
+        //      );
+        //    },
+        //  );
       ),
     );
   }
